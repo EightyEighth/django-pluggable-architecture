@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <h1>Companies</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in companies %}
+                    <tr>
+                        <td>{{ company.name }}</td>
+                        <td>
+                            <a href="{% url 'delete_company' company.id %}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <form action="{% url 'add_company' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group mt-3">
+                <label for="name">Company Name</label>
+                <input type="text" name="name" id="name" class="form-control">
+                <label for="about">Company Description</label>
+                <input type="text" name="about" id="about" class="form-control">
+                <label for="employee_count">Employee count</label>
+                <input type="number" name="employee_count" id="employee_count" class="form-control" min="1">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Add Company</button>
+        </form>
+    </div>
+</body>
+</html>

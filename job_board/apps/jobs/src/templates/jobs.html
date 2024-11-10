@@ -1,0 +1,61 @@
+<!-- Build page with list of jobs where each job has recruiter email company id and actions to delete and add job. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <h1>Jobs</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Recruiter Email</th>
+                    <th>Position</th>
+                    <th>Salary From</th>
+                    <th>Salary To</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.recruiter_id }}</td>
+                        <td>{{ job.position }}</td>
+                        <td>{{ job.salary_from }}</td>
+                        <td>{{ job.salary_to }}</td>
+                        <td>
+                            <a href="{% url 'delete_job' job.id %}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <form action="{% url 'add_job' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group mt-3">
+
+                <label for="position">Position</label>
+                <input type="text" name="position" id="position" class="form-control">
+
+                <label for="recruiter">Recruiter</label>
+                <select name="recruiter" id="recruiter" class="form-control">
+                    {% for recruiter in recruiters %}
+                        <option value="{{ recruiter.id }}">{{ recruiter.email }}</option>
+                    {% endfor %}
+                </select>
+                <label for="salary_from">Salary From</label>
+                <input type="number" name="salary_from" id="salary_from" class="form-control">
+                <label for="salary_to">Salary To</label>
+                <input type="number" name="salary_to" id="salary_to" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Add Job</button>
+        </form>
+    </div>
+</body>
+</html>
