@@ -5,6 +5,8 @@ db.sqlite3
 .idea/
 build/
 dist/
+../.idea
+../.venv
 *.egg-info/
 *.egg/
 *.egg-info
